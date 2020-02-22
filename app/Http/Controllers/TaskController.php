@@ -13,7 +13,7 @@ class TaskController extends Controller{
     * @return \Illuminate\Http\Response
     */
    public function index(){
-      //
+      return response()->json(Task::all()->toArray());
    }
 
    /**
@@ -53,7 +53,7 @@ class TaskController extends Controller{
     * @return \Illuminate\Http\Response
     */
    public function show(Task $task){
-      //
+      return response()->json($task);
    }
 
    /**
@@ -74,7 +74,13 @@ class TaskController extends Controller{
     * @return \Illuminate\Http\Response
     */
    public function update(Request $request, Task $task){
-      //
+      $status = $task->update(
+         $request->only(['name', 'category_id', 'user_id', 'order'])
+      );
+      return response()->json([
+         'status' => $status,
+         'message' => $status ? 'Task Updated!' : 'Error Updating Task'
+      ]);
    }
 
    /**
@@ -84,6 +90,10 @@ class TaskController extends Controller{
     * @return \Illuminate\Http\Response
     */
    public function destroy(Task $task){
-      //
+      $status = $task->delete();
+      return response()->json([
+         'status' => $status,
+         'message' => $status ? 'Task Deleted!' : 'Error Deleting Task'
+      ]);
    }
 }

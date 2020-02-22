@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/{any}', 'SinglePageController@index')->where('any', '.*');
+
+/*
 Route::get('/', function () {
-    return view('welcome');
+   return view('welcome');
 });
+*/
